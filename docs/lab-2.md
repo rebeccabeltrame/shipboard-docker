@@ -123,6 +123,8 @@ Obiettivo: l'API gira su internet e ogni merge su `main` la aggiorna con l'immag
    Il parametro `imgURL` dice a Render quale tag usare: quello con lo SHA, non `latest`.
 7. Verifica: cambiate qualcosa di visibile, PR, merge. Dopo qualche minuto `/info` ha lo SHA del commit nuovo. Bonus: aggiungete uno step di smoke test che aspetta lo SHA su `/info` e fallisce dopo 6 minuti.
 
+Bonus, frontend: secondo Web Service da `ghcr.io/<utente>/shipboard-web:latest`, piano Free, con `PORT=8080` e `API_URL=https://shipboard-<utente>.onrender.com` (l'URL dell'API, senza `/` finale). Niente CORS: il browser parla solo con il frontend, ed e' nginx a inoltrare `/api` all'API.
+
 **Rompetelo apposta** (una cosa alla volta, poi rimettete a posto):
 - Nel `curl`, cambiate `shipboard-api` in `shipboard-web`. Cosa risponde Render? Perche' e' una buona cosa?
 - Su Render rigenerate il deploy hook e rilanciate la pipeline senza aggiornare il secret. Cosa succede? Quando lo fareste davvero?

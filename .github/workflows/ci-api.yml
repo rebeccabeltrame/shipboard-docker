@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - ".github/workflows/ci-api.yml"
       - "src/**"
   workflow_dispatch:
 
@@ -25,3 +26,11 @@ jobs:
           IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}-api
           docker build -t $IMAGE:latest ./src/ShipBoard.Api
           docker push $IMAGE:latest
+
+  deploy:
+    needs: api
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy su Render
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_API }}"
