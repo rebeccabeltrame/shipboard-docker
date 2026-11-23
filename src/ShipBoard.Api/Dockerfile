@@ -18,6 +18,10 @@ WORKDIR /app
 
 COPY --from=build /app ./
 
+# La pipeline passa lo SHA del commit: /info mostra quale versione sta girando.
+ARG APP_VERSION=dev
+ENV APP_VERSION=$APP_VERSION
+
 EXPOSE 8080
 
 # L'immagine aspnet definisce APP_UID: il processo gira come utente non-root.

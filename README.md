@@ -55,5 +55,5 @@ e per il [deploy di container su App Service](https://learn.microsoft.com/en-us/
 
 ## Lab di oggi
 
-Le istruzioni sono in [docs/lab-2.md](docs/lab-2.md) (il lab precedente e' in [docs/lab-docker.md](docs/lab-docker.md)).
-Se resti indietro, ogni passo ha un branch con la soluzione: `git remote add prof https://github.com/matteobortolazzo/shipboard-docker`, poi `git fetch prof && git checkout prof/step-07 -- .` e riparti da li'.
+Le istruzioni sono in [docs/lab-3.md](docs/lab-3.md) (i lab precedenti: [docs/lab-2.md](docs/lab-2.md), [docs/lab-docker.md](docs/lab-docker.md)).
+Se resti indietro, ogni parte ha un branch con la soluzione (`soluzione-otel`, `soluzione-azure`, `soluzione-k8s`): i comandi sono in cima al lab.

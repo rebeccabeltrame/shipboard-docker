@@ -24,7 +24,9 @@ jobs:
       - name: Build e push dell'immagine
         run: |
           IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}-api
-          docker build -t $IMAGE:latest ./src/ShipBoard.Api
+          # Due tag: lo SHA identifica la versione (rollback, deploy precisi), latest e' comodo a mano.
+          docker build --build-arg APP_VERSION=$GITHUB_SHA -t $IMAGE:$GITHUB_SHA -t $IMAGE:latest ./src/ShipBoard.Api
+          docker push $IMAGE:$GITHUB_SHA
           docker push $IMAGE:latest
 
   deploy:
@@ -33,4 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger deploy su Render
-        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_API }}"
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_API }}
+        run: |
+          # imgURL: Render usa l'immagine con lo SHA di questo commit invece di riscaricare latest.
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}-api:$GITHUB_SHA"
+          curl -fsS -X POST "$HOOK&imgURL=$(jq -rn --arg v "$IMAGE" '$v|@uri')"
